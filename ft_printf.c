@@ -6,11 +6,22 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 14:01:58 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/05 17:39:58 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/06 16:55:14 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void		error(int error)
+{
+	if (error == 0)
+		ft_putstr_fd("Unknown conversion specifier\n", 2);
+	if (error == 1)
+		ft_putstr_fd("Undefined behaviour\n", 2);
+	if (error == 1)
+		ft_putstr_fd("Error whilst allocating memory\n", 2);
+	exit(1);
+}
 
 static void	setup_event(t_event *ev)
 {

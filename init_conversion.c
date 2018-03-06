@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:26:55 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/05 17:40:02 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/06 16:55:14 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,22 @@ static int	check_number(const char *s, int *i, t_conv *conv)
 
 int				init_conversion(const char *s, va_list *ap, t_event *ev)
 {
-	ev->conv = new_conv();
+	char	c;
+
+	ev->cur_conv = new_conv();
 	while (1)
 	{
 		(ev->index)++;
-		if (check_flag(*(s + ev->index), &(ev->conv)))
+		c = *(s + ev->index);
+		if (check_flag(c, &(ev->cur_conv)))
 			continue ;
-		else if (check_len_mod(s, &(ev->index), &(ev->conv)))
+		else if (check_len_mod(s, &(ev->index), &(ev->cur_conv)))
 			continue ;
-		else if (*(s + ev->index) == '.')
+		else if (c == '.')
 			continue ;
-		else if (check_number(s, &(ev->index), &(ev->conv)))
+		else if (check_number(s, &(ev->index), &(ev->cur_conv)))
 			continue ;
-		else if (convert(ev, ap, *(s + ev->index)))
+		else if (convert(ev, &(ev->cur_conv), ap, c))
 			return (ev->index);
 		else
 			return (ev->index - 1);

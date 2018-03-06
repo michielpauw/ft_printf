@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_functions.c                                :+:      :+:    :+:   */
+/*   ft_strset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/05 17:35:14 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/05 17:40:00 by mpauw            ###   ########.fr       */
+/*   Created: 2018/03/06 16:10:26 by mpauw             #+#    #+#             */
+/*   Updated: 2018/03/06 16:55:16 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	conv_string(t_conv *conv, va_list *ap)
+char	*ft_strset(char c, size_t length)
 {
+	char	*str;
 
+	if (!(str = (char *)malloc(sizeof(char) * (length + 1))))
+		return (NULL);
+	*(str + length) = 0;
+	while (length)
+	{
+		length--;
+		*(str + length) = c;
+	}
+	return (str);
 }
