@@ -6,12 +6,12 @@
 #    By: mpauw <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/06 17:41:17 by mpauw             #+#    #+#              #
-#    Updated: 2018/03/07 12:06:39 by mpauw            ###   ########.fr        #
+#    Updated: 2018/03/07 16:08:57 by mpauw            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-INCLUDES = libftprintf.h libft.h
+INCLUDES = libftprintf.h
 SRCS = ft_printf.c\
 	   conv_char.c\
 	   conv_dec.c\
@@ -30,13 +30,12 @@ LIBFT = libft.a
 FT = ft
 MAKE = make
 FLAGS = -Wall -Wextra -Werror 
-SEGFAULT = -fsanitize=address 
 
 all : $(NAME)
 
 $(NAME): $(OBJ) $(LFTDIR)$(LIBFT)
 	-@ar rc $(NAME) $(OBJ) && ranlib $(NAME)
-	-@echo "RTv1 Ready"
+	-@echo "ft_printf Ready"
 
 %.o: %.c $(INCLUDES)
 	-@gcc $(FLAGS) -I$(LFTDIR) -c $(SRCS)

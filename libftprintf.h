@@ -3,7 +3,7 @@
 
 # define CONV_AMOUNT 9
 
-# include "libft/libft.h"
+# include "libft.h"
 # include <stdarg.h>
 
 typedef struct	s_func_pair
@@ -35,18 +35,19 @@ typedef struct	s_event
 	int			str_len;
 	int			index;
 	t_func_pair	func_arr[CONV_AMOUNT];
+	va_list		ap;
 }				t_event;
 
 int				ft_printf(const char *format, ...);
-int				init_conversion(const char *s, va_list *ap, t_event *ev);
+int				init_conversion(const char *s, t_event *ev);
 void			create_func_arr(t_event *ev);
-int				convert(t_event *ev, t_conv *conv, va_list *ap, char c);
-void			conv_hex_oct(t_event *ev, t_conv *conv, va_list *ap);
-void			conv_dec(t_event *ev, t_conv *conv, va_list *ap);
-void			conv_string(t_event *ev, t_conv *conv, va_list *ap);
-void			conv_char(t_event *ev, t_conv *conv, va_list *ap);
-void			conv_percent(t_event *ev, t_conv *conv, va_list *ap);
-void			conv_pointer(t_event *ev, t_conv *conv, va_list *ap);
+int				convert(t_event *ev, t_conv *conv, char c);
+void			conv_hex_oct(t_event *ev, t_conv *conv);
+void			conv_dec(t_event *ev, t_conv *conv);
+void			conv_string(t_event *ev, t_conv *conv);
+void			conv_char(t_event *ev, t_conv *conv);
+void			conv_percent(t_event *ev, t_conv *conv);
+void			conv_pointer(t_event *ev, t_conv *conv);
 char			*handle_min_width(t_conv *conv, char *little);
 char			*handle_precision(t_conv *conv, char *str);
 void			error(int error);

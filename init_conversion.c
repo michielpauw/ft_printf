@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:26:55 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/07 11:52:34 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/07 16:49:22 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	check_number(const char *s, int *i, t_conv *conv)
 
 	if (ft_isdigit(*(s + *i)))
 	{
-		num = ft_atoi((char *)s);
+		num = ft_atoi((char *)(s + *i));
 		if (*(s + *i - 1) == '.')
 			conv->precision = num;
 		else
@@ -81,7 +81,7 @@ static int	check_number(const char *s, int *i, t_conv *conv)
 	return (0);
 }
 
-int				init_conversion(const char *s, va_list *ap, t_event *ev)
+int				init_conversion(const char *s, t_event *ev)
 {
 	char	c;
 
@@ -98,7 +98,7 @@ int				init_conversion(const char *s, va_list *ap, t_event *ev)
 			continue ;
 		else if (check_number(s, &(ev->index), &(ev->cur_conv)))
 			continue ;
-		else if (convert(ev, &(ev->cur_conv), ap, c))
+		else if (convert(ev, &(ev->cur_conv), c))
 			return (ev->index);
 		else
 			return (ev->index - 1);

@@ -6,13 +6,14 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 11:23:46 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/07 11:31:12 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/07 17:33:31 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft/libft.h"
+#include "libftprintf.h"
 
 int	main(void)
 {
-	ft_printf("%x\n", 20);
+	ft_printf("%08o\n", 3434);
 }

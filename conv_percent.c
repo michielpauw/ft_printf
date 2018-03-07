@@ -6,16 +6,14 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:38:30 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/07 11:50:42 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/07 16:36:49 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void	conv_percent(t_event *ev, t_conv *conv, va_list *ap)
+void	conv_percent(t_event *ev, t_conv *conv)
 {
-
 	(void)ev;
 	(void)conv;
-	(void)ap;
 }
