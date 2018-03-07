@@ -6,11 +6,11 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 16:00:02 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/06 16:42:39 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/07 11:52:08 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libftprintf.h"
 
 static void	handle_right(char *big, char *little)
 {
@@ -42,8 +42,6 @@ static void	handle_left(char *big, char *little, size_t width)
 char	*handle_min_width(t_conv *conv, char *little)
 {
 	char	*big;
-	size_t	i;
-	size_t	j;
 
 	if (conv->left || !conv->zero)
 	{

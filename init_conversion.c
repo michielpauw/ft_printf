@@ -6,11 +6,11 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:26:55 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/06 16:55:14 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/07 11:52:34 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libftprintf.h"
 
 static t_conv	new_conv(void)
 {
@@ -27,6 +27,7 @@ static t_conv	new_conv(void)
 	conv.len_mod = 0;
 	conv.length = 0;
 	conv.str = 0;
+	return (conv);
 }
 
 static int	check_flag(char c, t_conv *conv)
@@ -50,7 +51,8 @@ static int	check_len_mod(const char *s, int *i, t_conv *conv)
 {
 	if (ft_strchr("hljz", *(s + *i)))
 	{
-		if (*(s + *i) == 'h' || *(s + *i) == 'l' && *(s + *i + 1) == *(s + *i))
+		if ((*(s + *i) == 'h' || *(s + *i) == 'l')
+				&& *(s + *i + 1) == *(s + *i))
 		{
 			conv->len_mod = *(s + *i) + 22;
 			(*i)++;
@@ -68,7 +70,7 @@ static int	check_number(const char *s, int *i, t_conv *conv)
 
 	if (ft_isdigit(*(s + *i)))
 	{
-		num = ft_atod(s);
+		num = ft_atoi((char *)s);
 		if (*(s + *i - 1) == '.')
 			conv->precision = num;
 		else

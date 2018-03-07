@@ -6,13 +6,13 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:15 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/06 16:55:18 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/07 11:50:29 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libftprintf.h"
 
-static void	handle_alt(char *str, char type, int upper)
+static char	*handle_alt(char *str, char type, int upper)
 {
 	char	*tmp;
 
@@ -22,6 +22,8 @@ static void	handle_alt(char *str, char type, int upper)
 		tmp = ft_strjoin(str, "0X");
 	else if (*str != '0')
 		tmp = ft_strjoin(str, "0");
+	else
+		tmp = str;
 	free(str);
 	return (tmp);
 }
@@ -31,7 +33,9 @@ void		conv_hex_oct(t_event *ev, t_conv *conv, va_list *ap)
 	unsigned long long int	in;
 	char					*tmp_str;
 
-	in = va_arg(ap, unsigned long long int);
+	(void)ev;
+
+	in = va_arg(*ap, unsigned long long int);
 	if (conv->sign || conv->space)
 		error(1);
 	if (conv->type == 'x' && !conv->upper)

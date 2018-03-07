@@ -6,11 +6,11 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:46:27 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/06 16:55:12 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/07 11:52:36 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libftprintf.h"
 
 void	create_func_arr(t_event *ev)
 {

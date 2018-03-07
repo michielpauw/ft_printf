@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/05 14:01:58 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/06 16:55:14 by mpauw            ###   ########.fr       */
+/*   Created: 2018/03/07 11:45:43 by mpauw             #+#    #+#             */
+/*   Updated: 2018/03/07 12:06:38 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libftprintf.h"
 
 void		error(int error)
 {
@@ -40,7 +40,7 @@ int			ft_printf(const char *format, ...)
 	while (*(format + ev.index))
 	{
 		if (*(format + ev.index) == '%')
-			 ev.index = init_ev.conversion(format, &ap, &ev);
+			 ev.index = init_conversion(format, &ap, &ev);
 		else
 		{
 			ft_putchar(*(format + ev.index));
@@ -48,4 +48,5 @@ int			ft_printf(const char *format, ...)
 		}
 	}
 	va_end(ap);
+	return (1);
 }

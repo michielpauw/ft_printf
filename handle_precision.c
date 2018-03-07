@@ -6,11 +6,11 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 16:27:38 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/06 16:49:50 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/07 11:52:35 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libftprintf.h"
 
 static char	*handle_string(t_conv *conv, char *str)
 {
@@ -18,7 +18,7 @@ static char	*handle_string(t_conv *conv, char *str)
 
 	if (!(to_return = (char *)malloc(sizeof(char) * (conv->precision + 1))))
 		error(2);
-	to_return = ft_strcpy(to_return, str, conv->precision);
+	to_return = ft_strncpy(to_return, str, conv->precision);
 	*(to_return + conv->precision) = 0;
 	free(str);
 	return (to_return);
@@ -28,6 +28,7 @@ char		*handle_precision(t_conv *conv, char *str)
 {
 	char	*to_return;
 	size_t	i;
+	size_t	j;
 
 	if (conv->type == 's')
 		return (handle_string(conv, str));

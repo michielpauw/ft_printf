@@ -6,13 +6,13 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:32:03 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/06 16:56:18 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/07 11:52:37 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libftprintf.h"
 
-void	convert(t_event *ev, t_conv *conv, va_list *ap, char c)
+int	convert(t_event *ev, t_conv *conv, va_list *ap, char c)
 {
 	int	i;
 
@@ -22,13 +22,13 @@ void	convert(t_event *ev, t_conv *conv, va_list *ap, char c)
 	i = 0;
 	while (i < CONV_AMOUNT)
 	{
-		if ((ev->func_arr[1]).type = c)
+		if ((ev->func_arr[1]).type == c)
 		{
 			conv->f = (ev->func_arr[i]).f;
 			conv->f(ev, ap);
-			return ;
+			return (1);
 		}
 		i++;
 	}
-	error(0);
+	return (0);
 }

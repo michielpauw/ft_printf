@@ -6,13 +6,15 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:35:51 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/06 16:56:00 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/07 11:50:58 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libftprintf.h"
 
 void	conv_pointer(t_event *ev, t_conv *conv, va_list *ap)
 {
-
+	(void)ev;
+	(void)conv;
+	(void)ap;
 }

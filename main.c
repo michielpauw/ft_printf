@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_string.c                                   :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/05 17:35:14 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/07 11:52:38 by mpauw            ###   ########.fr       */
+/*   Created: 2018/03/07 11:23:46 by mpauw             #+#    #+#             */
+/*   Updated: 2018/03/07 11:31:12 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-void	conv_string(t_event *ev, t_conv *conv, va_list *ap)
+int	main(void)
 {
-	(void)ev;
-	(void)conv;
-	(void)ap;
-
+	ft_printf("%x\n", 20);
 }
