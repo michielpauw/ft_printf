@@ -2,6 +2,7 @@
 # define FT_PRINTF_H
 
 # define CONV_AMOUNT 9
+# define LEN_MOD_AMOUNT 5
 
 # include "libft.h"
 # include <stdarg.h>
@@ -34,7 +35,8 @@ typedef struct	s_event
 	t_conv		cur_conv;
 	int			str_len;
 	int			index;
-	t_func_pair	func_arr[CONV_AMOUNT];
+	t_func_pair	func_arr_conv[CONV_AMOUNT];
+	t_func_pair	func_arr_len_mod[LEN_MOD_AMOUNT];
 	va_list		ap;
 }				t_event;
 

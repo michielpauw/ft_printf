@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:32:03 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/07 16:40:13 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 12:58:16 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	convert(t_event *ev, t_conv *conv, char c)
 	i = 0;
 	while (i < CONV_AMOUNT)
 	{
-		if ((ev->func_arr[i]).type == c)
+		if ((ev->func_arr_conv[i]).type == c)
 		{
-			conv->f = (ev->func_arr[i]).f;
+			conv->f = (ev->func_arr_conv[i]).f;
 			conv->f(ev, conv);
 			return (1);
 		}

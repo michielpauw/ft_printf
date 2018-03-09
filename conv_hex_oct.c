@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:15 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/07 17:33:29 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 11:38:05 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ static char	*handle_alt(char *str, char type, int upper)
 
 void		conv_hex_oct(t_event *ev, t_conv *conv)
 {
-	unsigned long long int	in;
-	char					*tmp_str;
+	uintmax_t	in;
+	char		*tmp_str;
 
-	if (!(in = va_arg(ev->ap, unsigned long long int)))
+	if (!(in = va_arg(ev->ap, uintmax_t)))
 		error(3);
 	if (conv->sign || conv->space)
 		error(1);

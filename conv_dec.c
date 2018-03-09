@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:36:58 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/07 17:33:27 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 11:39:33 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ static char	handle_sign(t_conv *conv, char *str)
 
 void	conv_dec(t_event *ev, t_conv *conv)
 {
-	long long int	in;
-	char			*tmp_str;
+	intmax_t	in;
+	char		*tmp_str;
 
 	if (conv->alt)
 		error(1);
-	if (!(in = va_arg(ev->ap, unsigned long long int)))
+	if (!(in = va_arg(ev->ap, intmax_t)))
 		error(3);
-	tmp_str = ft_itoa(in, "0123456789");
+	if (!(tmp_str = ft_itoa(in)))
+		error(2);
 	if (in >= 0 && (conv->sign || conv->space))
 		tmp_str = handle_sign(conv, tmp_str);
 	if (ft_strlen(tmp_str) < conv->precision)
