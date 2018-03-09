@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:15 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 16:22:09 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 17:33:14 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static void	set_len_mod(t_conv *conv, t_event *ev)
 	}
 }
 
-#include <stdio.h>
 void		conv_hex_oct(t_event *ev, t_conv *conv)
 {
 	char		*tmp_str;

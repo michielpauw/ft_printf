@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 11:45:43 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 16:23:07 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 17:43:03 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ int			ft_printf(const char *format, ...)
 		}
 	}
 	va_end(ap);
-	return (1);
+	while (1)
+		(void)1;
+	return (ev->str_len);
 }

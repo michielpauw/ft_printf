@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:44:05 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 16:22:05 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 16:29:33 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ static void	len_mod_char_short(t_conv *conv, t_event *ev)
 {
 	if (!(conv->len_mod))
 	{
-		if (!((conv->types).i = va_arg(ev->ap, int)))
+		if (!((conv->types).ui = va_arg(ev->ap, unsigned int)))
 			error(3);
 	}
 	else if (conv->len_mod == 'H')
 	{
-		if (!((conv->types).usi = va_arg(ev->ap, int)))
+		if (!((conv->types).uc = va_arg(ev->ap, int)))
 			error(3);
 	}
 	else
 	{
-		if (!((conv->types).si = va_arg(ev->ap, int)))
+		if (!((conv->types).usi = va_arg(ev->ap, int)))
 			error(3);
 	}
 }

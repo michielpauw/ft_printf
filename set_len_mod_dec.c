@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 12:54:46 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 15:39:40 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 16:30:29 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,47 @@
 
 static void	len_mod_char_short(t_conv *conv, t_event *ev)
 {
-	(void)conv;
-	(void)ev;
+	if (!(conv->len_mod))
+	{
+		if (!((conv->types).i = va_arg(ev->ap, int)))
+			error(3);
+	}
+	else if (conv->len_mod == 'H')
+	{
+		if (!((conv->types).c = va_arg(ev->ap, int)))
+			error(3);
+	}
+	else
+	{
+		if (!((conv->types).si = va_arg(ev->ap, int)))
+			error(3);
+	}
 }
 
 static void	len_mod_long(t_conv *conv, t_event *ev)
 {
-	(void)conv;
-	(void)ev;
+	if (conv->len_mod == 'L')
+	{
+		if (!((conv->types).lli = va_arg(ev->ap, long long int)))
+			error(3);
+	}
+	else
+	{
+		if (!((conv->types).li = va_arg(ev->ap, long int)))
+			error(3);
+	}
 }
 
 static void	len_mod_intmax(t_conv *conv, t_event *ev)
 {
-	(void)conv;
-	(void)ev;
+	if (!((conv->types).imt = va_arg(ev->ap, intmax_t)))
+		error(3);
 }
 
 static void	len_mod_size(t_conv *conv, t_event *ev)
 {
-	(void)conv;
-	(void)ev;
+	if (!((conv->types).st = va_arg(ev->ap, size_t)))
+		error(3);
 }
 
 void		set_len_mod_dec(t_event *ev)
