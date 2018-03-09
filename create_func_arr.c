@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:46:27 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 13:04:17 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 15:06:02 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,11 @@ static void	create_func_arr_conv(t_event *ev)
 	(ev->func_arr_conv[8]).f = &conv_percent;
 }
 
-static void	create_func_arr_len_mod(t_event *ev)
-{
-	(ev->func_arr_len_mod[0]).type = 'h';
-	(ev->func_arr_len_mod[0]).f = &len_mod_char_short;
-	(ev->func_arr_len_mod[1]).type = 'H';
-	(ev->func_arr_len_mod[1]).f = &len_mod_char_short;
-	(ev->func_arr_len_mod[2]).type = 'l';
-	(ev->func_arr_len_mod[2]).f = &len_mod_long;
-	(ev->func_arr_len_mod[3]).type = 'L';
-	(ev->func_arr_len_mod[3]).f = &len_mod_long;
-	(ev->func_arr_len_mod[4]).type = 'j';
-	(ev->func_arr_len_mod[4]).f = &len_mod_intmax;
-	(ev->func_arr_len_mod[5]).type = 'z';
-	(ev->func_arr_len_mod[5]).f = &len_mod_size;
-}
-
 void	create_func_arr(t_event *ev)
 {
 	create_func_arr_conv(ev);
-	create_func_arr_len_mod(ev);
+	set_len_mod_dec(ev);
+	set_len_mod_hex_oct(ev);
+	set_len_mod_string(ev);
+	set_len_mod_char(ev);
 }

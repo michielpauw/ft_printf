@@ -6,7 +6,7 @@
 #    By: mpauw <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/06 17:41:17 by mpauw             #+#    #+#              #
-#    Updated: 2018/03/07 16:08:57 by mpauw            ###   ########.fr        #
+#    Updated: 2018/03/09 15:35:08 by mpauw            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,11 @@ SRCS = ft_printf.c\
 	   create_func_arr.c\
 	   handle_min_width.c\
 	   handle_precision.c\
-	   init_conversion.c
+	   init_conversion.c\
+	   set_len_mod_dec.c\
+	   set_len_mod_hex_oct.c\
+	   set_len_mod_string.c\
+	   set_len_mod_char.c
 OBJ = $(SRCS:%.c=%.o)
 LFTDIR = libft/
 LIBFT = libft.a

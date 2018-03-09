@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:53 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 11:21:25 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 14:43:43 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	conv_char(t_event *ev, t_conv *conv)
 {
-	wint_t	in;
+	wchar_t	in;
 	char	*tmp_str;
 
-	if (!(in = va_arg(ev->ap, wint_t)))
+	if (!(in = va_arg(ev->ap, wchar_t)))
 		error(3);
 	if (conv->alt || conv->zero || conv->sign || conv->space)
 		error(1);

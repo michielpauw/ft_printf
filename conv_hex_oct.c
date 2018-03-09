@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:15 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 11:38:05 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 16:22:09 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,40 @@ static char	*handle_alt(char *str, char type, int upper)
 	return (tmp);
 }
 
+static void	set_len_mod(t_conv *conv, t_event *ev)
+{
+	int	i;
+
+	i = 0;
+	while (i < LEN_MOD_AMOUNT)
+	{
+		if (conv->len_mod == (ev->func_arr_len_mod_hex_oct[i]).type)
+		{
+			(ev->func_arr_len_mod_hex_oct[i]).f(conv, ev);
+			return ;
+		}
+		i++;
+	}
+}
+
+#include <stdio.h>
 void		conv_hex_oct(t_event *ev, t_conv *conv)
 {
-	uintmax_t	in;
 	char		*tmp_str;
 
-	if (!(in = va_arg(ev->ap, uintmax_t)))
-		error(3);
 	if (conv->sign || conv->space)
 		error(1);
+	set_len_mod(conv, ev);
 	if (conv->type == 'x' && !conv->upper)
-		tmp_str = ft_int_to_base(in, "0123456789abcdef");
+		tmp_str = ft_int_to_base((uintmax_t)((conv->types).uimt),
+				"0123456789abcdef");
 	else if (conv->type == 'x' && conv->upper)
-		tmp_str = ft_int_to_base(in, "0123456789ABCDEF");
+		tmp_str = ft_int_to_base((uintmax_t)((conv->types).uimt),
+				"0123456789ABCDEF");
 	else if (conv->type == 'u')
-		tmp_str = ft_int_to_base(in, "0123456789");
+		tmp_str = ft_int_to_base((uintmax_t)((conv->types).uimt), "0123456789");
 	else if (conv->type == 'o')
-		tmp_str = ft_int_to_base(in, "01234567");
+		tmp_str = ft_int_to_base((uintmax_t)((conv->types).uimt), "01234567");
 	if (ft_strlen(tmp_str) < conv->precision)
 		tmp_str = handle_precision(conv, tmp_str);
 	if (conv->alt)

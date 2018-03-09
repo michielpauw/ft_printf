@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 16:00:02 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/07 16:58:35 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 16:26:15 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ char	*handle_min_width(t_conv *conv, char *little)
 		if (!(big = ft_strset('0', conv->min_width)))
 			error(2);
 	}
-	ft_putnbr(conv->left);
-	ft_putchar('\n');
 	if (conv->left)
 		handle_left(big, little);
 	else

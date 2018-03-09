@@ -6,15 +6,14 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:36:58 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 11:39:33 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/09 14:43:44 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static char	handle_sign(t_conv *conv, char *str)
+static char	*handle_sign(t_conv *conv, char *str)
 {
-	int		length;
 	char	*tmp;
 
 	if (conv->sign)
@@ -40,8 +39,6 @@ void	conv_dec(t_event *ev, t_conv *conv)
 		tmp_str = handle_sign(conv, tmp_str);
 	if (ft_strlen(tmp_str) < conv->precision)
 		tmp_str = handle_precision(conv, tmp_str);
-	if (conv->alt)
-		tmp_str = handle_alt(tmp_str, conv->type, conv->upper);
 	if (ft_strlen(tmp_str) < conv->min_width)
 		tmp_str = handle_min_width(conv, tmp_str);
 	conv->str = tmp_str;
