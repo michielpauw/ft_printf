@@ -4,7 +4,7 @@
 # define CONV_AMOUNT 9
 # define LEN_MOD_AMOUNT 7
 
-# include "libft.h"
+# include "libft/libft.h"
 # include <stdarg.h>
 
 typedef union				u_types
@@ -58,6 +58,7 @@ typedef struct				s_event
 	t_conv					cur_conv;
 	int						str_len;
 	int						index;
+	int						error;
 	t_func_pair				func_arr_conv[CONV_AMOUNT];
 	t_func_pair				func_arr_len_mod_dec[LEN_MOD_AMOUNT];
 	t_func_pair				func_arr_len_mod_hex_oct[LEN_MOD_AMOUNT];

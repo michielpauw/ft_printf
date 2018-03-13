@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:35:14 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 17:42:45 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/13 18:39:57 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static wchar_t	*handle_min_width_big_s(t_conv *conv, wchar_t *tmp_str,
 	return (big);
 }
 
-static wchar_t	*handle_min_width_small_s(t_conv *conv, char *tmp_str,
+static char		*handle_min_width_small_s(t_conv *conv, char *tmp_str,
 		size_t len)
 {
 	char	*big;
@@ -76,7 +76,7 @@ static void	handle_big_s(t_event *ev, t_conv *conv)
 	size_t	len;
 
 	if (!((tmp_str = va_arg(ev->ap, wchar_t *))))
-		error(3);
+		tmp_str = (wchar_t *)ft_strjoin("", "(null)");
 	len = 0;
 	while (*(tmp_str + len))
 		len++;
@@ -99,20 +99,21 @@ static void	handle_big_s(t_event *ev, t_conv *conv)
 void		conv_string(t_event *ev, t_conv *conv)
 {
 	char	*tmp_str;
+	size_t	len;
 
 	if (conv->alt || conv->sign || conv->space || conv->zero)
-		error(1);
+		ev->error = 1;
 	if (ft_tolower(conv->len_mod) == 'l' || conv->type == 'S')
 	{
 		handle_big_s(ev, conv);
 		return ;
 	}
 	if (!((tmp_str = va_arg(ev->ap, char *))))
-		error(3);
+		tmp_str = ft_strjoin("", "(null)");
 	if (ft_strlen(tmp_str) < conv->precision)
 		*(tmp_str + conv->precision) = 0;
-	if (ft_strlen(tmp_str) < conv->min_width)
-		tmp_str = handle_min_width_small_s(conv, tmp_str);
+	if ((len = ft_strlen(tmp_str)) < conv->min_width)
+		tmp_str = handle_min_width_small_s(conv, tmp_str, len);
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
 	ft_putstr(tmp_str);

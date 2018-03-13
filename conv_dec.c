@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:36:58 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 16:58:49 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/13 18:47:36 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,30 @@ static void	set_len_mod(t_conv *conv, t_event *ev)
 	}
 }
 
+static char	*get_initial_str(t_conv *conv)
+{
+	if (conv->len_mod == 'L')
+		return (ft_itoa((conv->types).lli));
+	else if (conv->len_mod == 'l')
+		return (ft_itoa((conv->types).li));
+	else if (conv->len_mod == 'j')
+		return (ft_itoa((conv->types).imt));
+	else if (conv->len_mod == 'z')
+		return (ft_itoa((conv->types).st));
+	else
+		return (ft_itoa((conv->types).i));
+}
+
 void		conv_dec(t_event *ev, t_conv *conv)
 {
 	char		*tmp_str;
 
 	if (conv->alt)
-		error(1);
+		ev->error = 1;
 	set_len_mod(conv, ev);
-	if (!(tmp_str = ft_itoa((intmax_t)((conv->types).imt))))
+	if (!(tmp_str = get_initial_str(conv)))
 		error(2);
-	if (((intmax_t)((conv->types).imt)) >= 0 && (conv->sign || conv->space))
+	if (((conv->types).i) >= 0 && (conv->sign || conv->space))
 		tmp_str = handle_sign(conv, tmp_str);
 	if (ft_strlen(tmp_str) < conv->precision)
 		tmp_str = handle_precision(conv, tmp_str);

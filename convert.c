@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:32:03 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 12:58:16 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/13 18:57:00 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	convert(t_event *ev, t_conv *conv, char c)
 	conv->upper = (c >= 'A' && c <= 'Z') ? 1 : 0;
 	c = conv->upper ? c + 32 : c;
 	conv->type = c;
+	if (conv->upper)
+		conv->len_mod = 'l';
 	i = 0;
 	while (i < CONV_AMOUNT)
 	{

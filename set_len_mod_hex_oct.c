@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:44:05 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 16:29:33 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/13 18:41:39 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,46 +15,29 @@
 static void	len_mod_char_short(t_conv *conv, t_event *ev)
 {
 	if (!(conv->len_mod))
-	{
-		if (!((conv->types).ui = va_arg(ev->ap, unsigned int)))
-			error(3);
-	}
+		(conv->types).ui = va_arg(ev->ap, unsigned int);
 	else if (conv->len_mod == 'H')
-	{
-		if (!((conv->types).uc = va_arg(ev->ap, int)))
-			error(3);
-	}
+		(conv->types).uc = va_arg(ev->ap, int);
 	else
-	{
-		if (!((conv->types).usi = va_arg(ev->ap, int)))
-			error(3);
-	}
+		(conv->types).usi = va_arg(ev->ap, int);
 }
 
 static void	len_mod_long(t_conv *conv, t_event *ev)
 {
 	if (conv->len_mod == 'L')
-	{
-		if (!((conv->types).ulli = va_arg(ev->ap, unsigned long long int)))
-			error(3);
-	}
+		(conv->types).ulli = va_arg(ev->ap, unsigned long long int);
 	else
-	{
-		if (!((conv->types).uli = va_arg(ev->ap, unsigned long int)))
-			error(3);
-	}
+		(conv->types).uli = va_arg(ev->ap, unsigned long int);
 }
 
 static void	len_mod_intmax(t_conv *conv, t_event *ev)
 {
-	if (!((conv->types).uimt = va_arg(ev->ap, uintmax_t)))
-		error(3);
+	(conv->types).uimt = va_arg(ev->ap, uintmax_t);
 }
 
 static void	len_mod_size(t_conv *conv, t_event *ev)
 {
-	if (!((conv->types).st = va_arg(ev->ap, size_t)))
-		error(3);
+	(conv->types).st = va_arg(ev->ap, size_t);
 }
 
 void		set_len_mod_hex_oct(t_event *ev)

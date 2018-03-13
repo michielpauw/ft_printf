@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:46:27 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/09 15:06:02 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/13 18:38:34 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,4 @@ void	create_func_arr(t_event *ev)
 	create_func_arr_conv(ev);
 	set_len_mod_dec(ev);
 	set_len_mod_hex_oct(ev);
-	set_len_mod_string(ev);
-	set_len_mod_char(ev);
 }
