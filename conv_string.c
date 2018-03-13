@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:35:14 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/13 18:39:57 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/13 20:24:42 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,27 @@ static char		*handle_min_width_small_s(t_conv *conv, char *tmp_str,
 	return (big);
 }
 
+static size_t	get_amount_bytes(wchar_t c)
+{
+	size_t	length;
+
+	length = 1;
+	while (c /= 2)
+		length++;
+	if (length < 8)
+		return (1);
+	return ((length + 3) / 5);
+}
+
 static void	handle_big_s(t_event *ev, t_conv *conv)
 {
 	wchar_t	*tmp_str;
 	size_t	len;
+	size_t	bytes;
 
+	bytes = 0;
 	if (!((tmp_str = va_arg(ev->ap, wchar_t *))))
-		tmp_str = (wchar_t *)ft_strjoin("", "(null)");
+		tmp_str = (wchar_t *)ft_strdup("(null)");
 	len = 0;
 	while (*(tmp_str + len))
 		len++;
@@ -84,7 +98,10 @@ static void	handle_big_s(t_event *ev, t_conv *conv)
 		*(tmp_str + conv->precision) = 0;
 	len = 0;
 	while (*(tmp_str + len))
+	{
+		bytes += get_amount_bytes(*(tmp_str + len));
 		len++;
+	}
 	if (len < conv->min_width)
 	{
 		tmp_str = handle_min_width_big_s(conv, tmp_str, len);
@@ -92,7 +109,7 @@ static void	handle_big_s(t_event *ev, t_conv *conv)
 	}
 	while (*tmp_str)
 		ft_putchar(*(tmp_str++));
-	ev->str_len += len;
+	ev->str_len += bytes;
 	(ev->index)++;
 }
 
@@ -109,7 +126,7 @@ void		conv_string(t_event *ev, t_conv *conv)
 		return ;
 	}
 	if (!((tmp_str = va_arg(ev->ap, char *))))
-		tmp_str = ft_strjoin("", "(null)");
+		tmp_str = ft_strdup("(null)");
 	if (ft_strlen(tmp_str) < conv->precision)
 		*(tmp_str + conv->precision) = 0;
 	if ((len = ft_strlen(tmp_str)) < conv->min_width)

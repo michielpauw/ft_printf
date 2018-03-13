@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 11:23:46 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/13 19:08:22 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/13 20:24:45 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,24 @@
 #include "libftprintf.h"
 #include <stdio.h>
 #include <limits.h>
+#include <locale.h>
+#include <wchar.h>
 
 int	main(void)
 {
 	int		n;
 	int		m;
 	void	*p;
+	wint_t	wc;
 
+	setlocale(LC_ALL, "");
 	m = 42;
+	wc = L'猫';
 	//printf("{%p}", &n);
-//	n = ft_printf("%u %u %u %u %u\n", 1, 100, 999, 42, 999988888);
-//	n = ft_printf("% BOOOO\n");
-//	m = printf("% BOOOO\n");
-	n = ft_printf("%");
-//	m = printf("%");
+	n = ft_printf("Mine: %S", NULL);
+	printf("\n");
+	m = printf("The other: %S", NULL);
 //	m = printf("%u %u %u %u %u\n", 1, 100, 999, 42, 999988888);
-	printf("%d %d\n", m, n);
+	printf("\n");
+	printf("Fac: %d Own: %d\n", m, n);
 }
