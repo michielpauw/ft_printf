@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:36:58 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/13 18:47:36 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/14 14:50:32 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ static char	*get_initial_str(t_conv *conv)
 		return (ft_itoa((conv->types).imt));
 	else if (conv->len_mod == 'z')
 		return (ft_itoa((conv->types).st));
+	else if (conv->len_mod == 'H')
+		return (ft_itoa((conv->types).sc));
+	else if (conv->len_mod == 'h')
+		return (ft_itoa((conv->types).si));
 	else
 		return (ft_itoa((conv->types).i));
 }

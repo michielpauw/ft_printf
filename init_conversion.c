@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:26:55 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/13 19:06:12 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/14 15:08:14 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	check_len_mod(const char *s, int *i, t_conv *conv)
 		if ((*(s + *i) == 'h' || *(s + *i) == 'l')
 				&& *(s + *i + 1) == *(s + *i))
 		{
-			conv->len_mod = *((s + *i) + 22);
+			conv->len_mod = *(s + *i) - 32;
 			(*i)++;
 		}
 		else
@@ -91,7 +91,9 @@ int				init_conversion(const char *s, t_event *ev)
 	{
 		(ev->index)++;
 		c = *(s + ev->index);
-		if (check_number(s, &(ev->index), &(ev->cur_conv)))
+		if (!c)
+			return (ev->index);
+		else if (check_number(s, &(ev->index), &(ev->cur_conv)))
 			continue ;
 		else if (check_flag(c, &(ev->cur_conv)))
 			continue ;
@@ -102,7 +104,9 @@ int				init_conversion(const char *s, t_event *ev)
 		else if (convert(ev, &(ev->cur_conv), c))
 			return (ev->index);
 		else
+		{		
 			return (ev->index);
+		}
 	}
 	return (ev->index);
 }

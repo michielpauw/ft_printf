@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:15 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/13 18:04:00 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/14 15:11:41 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,17 @@ static unsigned long long int	get_in(t_conv *conv)
 		return (((uintmax_t)(conv->types).uimt));
 	else if (conv->len_mod == 'z')
 		return (((size_t)(conv->types).st));
+	else if (conv->len_mod == 'H')
+		return (((unsigned char)(conv->types).uc));
+	else if (conv->len_mod == 'h')
+		return (((unsigned short int)(conv->types).usi));
 	else
 		return (((unsigned int)(conv->types).ui));
 }
 
 static char	*get_tmp_str(t_conv *conv)
 {
-	char	*tmp_str;
+	char					*tmp_str;
 
 	if (conv->type == 'x' && !conv->upper)
 	{

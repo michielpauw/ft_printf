@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:53 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/13 20:24:44 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/14 16:35:28 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@ void	conv_char(t_event *ev, t_conv *conv)
 	wchar_t	in;
 	char	*tmp_str;
 
-	tmp_str = 0;
-	if (!(in = va_arg(ev->ap, wchar_t)))
-		tmp_str = ""; 
 	if (conv->alt || conv->zero || conv->sign || conv->space)
 		ev->error = 1;
+	if (!(tmp_str = (char *)malloc(sizeof(char))))
+		error(2);
+	*tmp_str = 0;
+	in = va_arg(ev->ap, wchar_t);
 	(conv->min_width)--;
 	if (((int)conv->min_width) > 0)
-		tmp_str = handle_min_width(conv, "");
+		tmp_str = handle_min_width(conv, tmp_str);
 	if (conv->left)
 	{
 		ft_putchar(in);

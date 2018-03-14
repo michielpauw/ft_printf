@@ -6,11 +6,28 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:35:14 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/13 20:24:42 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/14 17:34:09 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+
+static wchar_t	*set_w_string(size_t size, char c)
+{
+	wchar_t	*big;
+	size_t	i;
+
+	if (!(big = (wchar_t *)malloc(sizeof(char) * (size + 1))))
+		error(2);
+	*(big + size) = 0;
+	i = 0;
+	while (i < size)
+	{
+		*(big + i) = c;
+		i++;
+	}
+	return (big);
+}
 
 static wchar_t	*handle_min_width_big_s(t_conv *conv, wchar_t *tmp_str,
 		size_t len)
@@ -18,9 +35,7 @@ static wchar_t	*handle_min_width_big_s(t_conv *conv, wchar_t *tmp_str,
 	wchar_t	*big;
 	size_t	i;
 
-	if (!(big = (wchar_t *)malloc(sizeof(wchar_t) * (conv->min_width + 1))))
-		error(2);
-	*(big + conv->min_width) = 0;
+	big = set_w_string(conv->min_width, ' ');
 	i = 0;
 	if (conv->left)
 	{
@@ -34,13 +49,13 @@ static wchar_t	*handle_min_width_big_s(t_conv *conv, wchar_t *tmp_str,
 	{
 		while (i < len)
 		{
-			*(big + conv->min_width - len + i) = *(tmp_str + i);
+			*(big - len + i) = *(tmp_str + i);
 			i++;
 		}
 	}
 	return (big);
 }
-
+/*
 static char		*handle_min_width_small_s(t_conv *conv, char *tmp_str,
 		size_t len)
 {
@@ -69,68 +84,68 @@ static char		*handle_min_width_small_s(t_conv *conv, char *tmp_str,
 	}
 	return (big);
 }
-
-static size_t	get_amount_bytes(wchar_t c)
+*/
+static size_t	get_amount_bytes(wchar_t *s)
 {
+	size_t	bytes;
 	size_t	length;
+	wchar_t	c;
 
-	length = 1;
-	while (c /= 2)
-		length++;
-	if (length < 8)
-		return (1);
-	return ((length + 3) / 5);
+	bytes = 0;
+	while (*s)
+	{
+		c = *s;
+		length = 1;
+		while (c /= 2)
+			length++;
+		if (length < 8)
+			bytes += 1;
+		else
+			bytes += ((length + 3) / 5);
+		s++;
+	}
+	return (bytes);
 }
 
-static void	handle_big_s(t_event *ev, t_conv *conv)
+void			handle_big_s(t_event *ev, t_conv *conv, wchar_t *tmp_str)
 {
-	wchar_t	*tmp_str;
-	size_t	len;
 	size_t	bytes;
 
 	bytes = 0;
-	if (!((tmp_str = va_arg(ev->ap, wchar_t *))))
-		tmp_str = (wchar_t *)ft_strdup("(null)");
-	len = 0;
-	while (*(tmp_str + len))
-		len++;
-	if (len < conv->precision)
-		*(tmp_str + conv->precision) = 0;
-	len = 0;
-	while (*(tmp_str + len))
-	{
-		bytes += get_amount_bytes(*(tmp_str + len));
-		len++;
-	}
-	if (len < conv->min_width)
-	{
-		tmp_str = handle_min_width_big_s(conv, tmp_str, len);
-		len = conv->min_width;
-	}
+	bytes += get_amount_bytes(tmp_str);
+	//if (bytes < conv->precision)
+	//	*(tmp_str + conv->precision) = 0;
+	if (bytes < conv->min_width)
+		tmp_str = handle_min_width_big_s(conv, tmp_str, bytes);
 	while (*tmp_str)
 		ft_putchar(*(tmp_str++));
-	ev->str_len += bytes;
+	ev->str_len += (bytes > conv->min_width) ? bytes : conv->min_width;
 	(ev->index)++;
 }
 
 void		conv_string(t_event *ev, t_conv *conv)
 {
 	char	*tmp_str;
-	size_t	len;
+	wchar_t	*tmp_w_str;
 
 	if (conv->alt || conv->sign || conv->space || conv->zero)
 		ev->error = 1;
 	if (ft_tolower(conv->len_mod) == 'l' || conv->type == 'S')
 	{
-		handle_big_s(ev, conv);
-		return ;
+		if (!(tmp_w_str = va_arg(ev->ap, wchar_t *)))
+			tmp_str = ft_strdup("(null)");
+		else
+		{
+			handle_big_s(ev, conv, tmp_w_str);
+			return ;
+		}
 	}
-	if (!((tmp_str = va_arg(ev->ap, char *))))
+	else if (!((tmp_str = va_arg(ev->ap, char *))))
 		tmp_str = ft_strdup("(null)");
 	if (ft_strlen(tmp_str) < conv->precision)
 		*(tmp_str + conv->precision) = 0;
-	if ((len = ft_strlen(tmp_str)) < conv->min_width)
-		tmp_str = handle_min_width_small_s(conv, tmp_str, len);
+	if (ft_strlen(tmp_str) < conv->min_width)
+		tmp_str = handle_min_width(conv, tmp_str);
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
 	ft_putstr(tmp_str);
