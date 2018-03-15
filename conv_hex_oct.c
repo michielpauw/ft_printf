@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:15 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/15 19:05:58 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/15 21:09:53 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ static char	*handle_alt(char *str, char type, int upper)
 	if (type == 'x' && !upper)
 	{
 		tmp = ft_strjoin("0x", str);
-		free(str);
+	//	free(str);
 	}
 	else if (type == 'x' && upper)
 	{
 		tmp = ft_strjoin("0X", str);
-		free(str);
+	//	free(str);
 	}
 	else if (*str != '0')
 	{
 		tmp = ft_strjoin("0", str);
-		free(str);
+	//	free(str);
 	}
 	else
 		tmp = str;
@@ -105,15 +105,17 @@ void		conv_hex_oct(t_event *ev, t_conv *conv)
 	set_len_mod(conv, ev);
 	tmp_str = get_tmp_str(conv);
 	zero = 0;
+	if (*tmp_str == '0' && conv->precision < 0)
+		*tmp_str = 0;
 	if (*tmp_str == '0')
 		zero = 1;
 	if (conv->alt && !conv->zero && !zero)
 		tmp_str = handle_alt(tmp_str, conv->type, conv->upper);
-	if (ft_strlen(tmp_str) < conv->precision)
+	if ((int)ft_strlen(tmp_str) < conv->precision)
 		tmp_str = handle_precision(conv, tmp_str);
 	if (conv->alt && conv->zero && !zero)
 		conv->min_width -= 2;
-	if ((int)ft_strlen(tmp_str) < (int)conv->min_width)
+	if ((int)ft_strlen(tmp_str) < conv->min_width)
 		tmp_str = handle_min_width(conv, tmp_str);
 	if (conv->alt && conv->zero && !zero)
 		tmp_str = handle_alt(tmp_str, conv->type, conv->upper);

@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:35:51 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/15 16:52:12 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/15 20:02:15 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ void	conv_pointer(t_event *ev, t_conv *conv)
 		tmp_str = ft_strjoin("", "(null)");
 	if (!(tmp_str = ft_int_to_base((uintmax_t)in, "0123456789abcdef")))
 		error(2);
-	conv->min_width -= 2;
+	tmp_str = ft_strjoin("0x", tmp_str);
 	if ((int)ft_strlen(tmp_str) < (int)conv->min_width)
 		tmp_str = handle_min_width(conv, tmp_str);
-	tmp_str = ft_strjoin("0x", tmp_str);
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
 	ft_putstr(tmp_str);

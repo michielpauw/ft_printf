@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:38:30 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/15 18:19:34 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/15 20:59:32 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	conv_percent(t_event *ev, t_conv *conv)
 	if (conv->sign || conv->alt)
 		ev->error = 1;
 	tmp_str = ft_strset('%', 1);
-	if (ft_strlen(tmp_str) < conv->min_width)
+	if ((int)ft_strlen(tmp_str) < conv->min_width)
 		tmp_str = handle_min_width(conv, tmp_str);
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;

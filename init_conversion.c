@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:26:55 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/15 14:58:56 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/15 21:02:56 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static t_conv	new_conv(void)
 	conv.len_mod = 0;
 	conv.length = 0;
 	conv.str = 0;
+	conv.type_sign = 0;
 	(conv.types).i = 0;
 	return (conv);
 }
@@ -73,7 +74,7 @@ static int	check_number(const char *s, int *i, t_conv *conv)
 	{
 		num = ft_atoi((char *)(s + *i));
 		if (*(s + *i - 1) == '.')
-			conv->precision = num;
+			conv->precision = (num == 0) ? -2 : num;
 		else
 			conv->min_width = num;
 		*i = *i + ft_numlen(num) - 1;
@@ -100,13 +101,14 @@ int				init_conversion(const char *s, t_event *ev)
 		else if (check_len_mod(s, &(ev->index), &(ev->cur_conv)))
 			continue ;
 		else if (c == '.')
+		{
+			(ev->cur_conv).precision = -1;
 			continue ;
+		}
 		else if (convert(ev, &(ev->cur_conv), c))
 			return (ev->index);
 		else
-		{		
 			return (ev->index);
-		}
 	}
 	return (ev->index);
 }

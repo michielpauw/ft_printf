@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 16:00:02 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/15 18:58:12 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/15 20:04:19 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ char	*handle_min_width(t_conv *conv, char *little)
 		if (!(big = ft_strset('0', conv->min_width)))
 			error(2);
 	}
-	if (conv->left)
+	if (conv->left || (conv->type == 'p' && conv->zero))
 		handle_left(big, little);
 	else
 		handle_right(big, little, conv->min_width);
-//	free(little);
+	free(little);
 	return (big);
 }

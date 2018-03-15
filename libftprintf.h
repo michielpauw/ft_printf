@@ -44,12 +44,13 @@ typedef struct				s_conv
 	int						sign;
 	int						space;
 	int						upper;
-	size_t					min_width;
-	size_t					precision;
+	int						min_width;
+	int						precision;
 	char					len_mod;
 	int						length;
 	char					*str;
 	char					type;
+	char					type_sign;
 	void					(*f)();
 }							t_conv;
 
@@ -84,7 +85,5 @@ void						set_len_mod_dec(t_event *ev);
 void						set_len_mod_hex_oct(t_event *ev);
 void						set_len_mod_string(t_event *ev);
 void						set_len_mod_char(t_event *ev);
-void						handle_big_s(t_event *ev, t_conv *conv,
-		wchar_t *tmp_str);
 
 #endif

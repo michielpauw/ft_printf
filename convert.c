@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:32:03 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/15 14:59:12 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/15 21:20:10 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ static void	deal_no_conversion(t_event *ev, t_conv *conv, char c)
 	(ev->index)++;
 }
 
+static void	order_precision(t_conv *conv, char c)
+{
+	if (conv->precision >= 0)
+		return ;
+	if (conv->precision < 0 && (c == 'd' || c == 'i' || c == 'u' || c == 'x'
+				|| c == 'o'))
+		conv->precision = -1;
+	else
+		conv->precision = -2;
+}
+
 int			convert(t_event *ev, t_conv *conv, char c)
 {
 	int		i;
@@ -43,6 +54,7 @@ int			convert(t_event *ev, t_conv *conv, char c)
 	{
 		if ((ev->func_arr_conv[i]).type == c)
 		{
+			order_precision(conv, c);
 			conv->f = (ev->func_arr_conv[i]).f;
 			conv->f(ev, conv);
 			return (1);

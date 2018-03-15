@@ -6,18 +6,18 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:35:14 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/15 18:50:33 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/15 21:40:16 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static wchar_t	*set_w_string(size_t size, wchar_t c)
+static wchar_t	*set_w_string(int size, wchar_t c)
 {
 	wchar_t	*big;
-	size_t	i;
+	int		i;
 
-	if (!(big = (wchar_t *)malloc(sizeof(char) * (size + 1))))
+	if (!(big = (wchar_t *)malloc(sizeof(wchar_t) * (size + 1))))
 		error(2);
 	*(big + size) = 0;
 	i = 0;
@@ -30,10 +30,10 @@ static wchar_t	*set_w_string(size_t size, wchar_t c)
 }
 
 static wchar_t	*handle_min_width_big_s(t_conv *conv, wchar_t *tmp_str,
-		size_t len)
+		int len)
 {
 	wchar_t	*big;
-	size_t	i;
+	int		i;
 
 	if (conv->left || !conv->zero)
 		big = set_w_string(conv->min_width, L' ');
@@ -71,17 +71,19 @@ static size_t	get_amount_bytes(wchar_t c)
 	return ((length + 3) / 5);
 }
 
-void			handle_big_s(t_event *ev, t_conv *conv, wchar_t *tmp_str)
+static void		handle_big_s(t_event *ev, t_conv *conv, wchar_t *tmp_str)
 {
-	size_t	bytes;
-	size_t	i;
+	int	bytes;
+	int	i;
 
+	if (conv->precision < 0)
+		*tmp_str = 0;
 	bytes = 0;
 	i = 0;
 	while (*(tmp_str + i))
 		bytes += get_amount_bytes(*(tmp_str + i++));
-	//if (bytes < conv->precision)
-	//	*(tmp_str + conv->precision) = 0;
+	if (bytes > conv->precision && conv->precision > 0)
+		*(tmp_str + conv->precision) = 0;
 	if (bytes < conv->min_width)
 		tmp_str = handle_min_width_big_s(conv, tmp_str, bytes);
 	else
@@ -96,12 +98,30 @@ void			handle_big_s(t_event *ev, t_conv *conv, wchar_t *tmp_str)
 	(ev->index)++;
 }
 
+static void		handle_little_s(t_event *ev, t_conv *conv, char *tmp_str)
+{
+	if (tmp_str == NULL && !((tmp_str = va_arg(ev->ap, char *))))
+		tmp_str = ft_strdup("(null)");
+	else
+		tmp_str = ft_strdup(tmp_str);
+	if (conv->precision < 0)
+		*tmp_str = 0;
+	if ((int)ft_strlen(tmp_str) > conv->precision && conv->precision > 0)
+		*(tmp_str + conv->precision) = 0;
+	if ((int)ft_strlen(tmp_str) < conv->min_width)
+		tmp_str = handle_min_width(conv, tmp_str);
+	ev->str_len += ft_strlen(tmp_str);
+	(ev->index)++;
+	ft_putstr(tmp_str);
+}
+
 void		conv_string(t_event *ev, t_conv *conv)
 {
-	char	*tmp_str;
 	wchar_t	*tmp_w_str;
+	char	*tmp_str;
 
-	if (conv->alt || conv->sign || conv->space)
+	tmp_str = NULL;
+	if (conv->alt)
 		ev->error = 1;
 	if (ft_tolower(conv->len_mod) == 'l' || conv->type == 'S')
 	{
@@ -113,14 +133,5 @@ void		conv_string(t_event *ev, t_conv *conv)
 			return ;
 		}
 	}
-	else if (!((tmp_str = va_arg(ev->ap, char *))))
-		tmp_str = ft_strdup("(null)");
-	tmp_str = ft_strdup(tmp_str);
-	if (ft_strlen(tmp_str) > conv->precision && conv->precision > 0)
-		*(tmp_str + conv->precision) = 0;
-	if (ft_strlen(tmp_str) < conv->min_width)
-		tmp_str = handle_min_width(conv, tmp_str);
-	ev->str_len += ft_strlen(tmp_str);
-	(ev->index)++;
-	ft_putstr(tmp_str);
+	handle_little_s(ev, conv, tmp_str);
 }
