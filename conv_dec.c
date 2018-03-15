@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:36:58 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/14 14:50:32 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/15 19:08:49 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,51 @@ static char	*get_initial_str(t_conv *conv)
 		return (ft_itoa((conv->types).i));
 }
 
+static char	*conv_str_sign(char *str, char sign)
+{
+	int	i;
+	int	len;
+	int	p;
+
+	i = 0;
+	p = 0;
+	len = ft_strlen(str);
+	while (i < len)
+	{
+		if (sign && ((*(str + 1) >= 0 && *(str + 1) <= 9)
+					|| (*str == '0' && !p)))
+		{
+			p = 1;
+			*(str + i) = sign;
+		}
+		else if (*(str + i) == sign && p)
+			*(str + i) = '0';
+		i++;
+	}
+	return (str);
+}
+
 void		conv_dec(t_event *ev, t_conv *conv)
 {
-	char		*tmp_str;
+	char	*tmp_str;
+	char	sign;
 
 	if (conv->alt)
 		ev->error = 1;
 	set_len_mod(conv, ev);
 	if (!(tmp_str = get_initial_str(conv)))
 		error(2);
+	sign = 0;
+	if (*tmp_str == '+' || *tmp_str == '-' || *tmp_str == ' ')
+		sign = *tmp_str;
+	if (ft_strlen(tmp_str) - (sign > 0) < conv->precision)
+		tmp_str = handle_precision(conv, tmp_str);
 	if (((conv->types).i) >= 0 && (conv->sign || conv->space))
 		tmp_str = handle_sign(conv, tmp_str);
-	if (ft_strlen(tmp_str) < conv->precision)
-		tmp_str = handle_precision(conv, tmp_str);
 	if (ft_strlen(tmp_str) < conv->min_width)
 		tmp_str = handle_min_width(conv, tmp_str);
-	conv->str = tmp_str;
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
-	ft_putstr(conv->str);
+	tmp_str = conv_str_sign(tmp_str, sign);
+	ft_putstr(tmp_str);
 }

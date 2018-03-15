@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 11:23:46 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/14 16:50:45 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/15 19:06:50 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,15 @@ int	main(void)
 	int		n;
 	int		m;
 	void	*p;
-	wint_t	wc;
+	wint_t	wc[] = {1874, 0};
 
 	setlocale(LC_ALL, "");
 	m = 42;
-	wc = L'猫';
 	//printf("{%p}", &n);
-	n = ft_printf("{%30S}", L"我是一只猫。");
+	n = ft_printf("%0+5d", 42);
 	printf("\n");
 //	m = printf("%lld\n", LLONG_MAX);
-	m = printf("{%30S}", L"我是一只猫。");
+	m = printf("%0+5d", 42);
 //	m = printf("%u %u %u %u %u\n", 1, 100, 999, 42, 999988888);
 	printf("\n");
 	printf("Fac: %d Own: %d\n", m, n);

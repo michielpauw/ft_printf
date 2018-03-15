@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:53 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/14 16:35:28 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/15 18:51:48 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	conv_char(t_event *ev, t_conv *conv)
 	wchar_t	in;
 	char	*tmp_str;
 
-	if (conv->alt || conv->zero || conv->sign || conv->space)
+	if (conv->alt || conv->sign)
 		ev->error = 1;
 	if (!(tmp_str = (char *)malloc(sizeof(char))))
 		error(2);

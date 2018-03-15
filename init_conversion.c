@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:26:55 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/14 15:08:14 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/15 14:58:56 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	check_number(const char *s, int *i, t_conv *conv)
 {
 	int		num;
 
-	if (ft_isdigit(*(s + *i)))
+	if (ft_isdigit(*(s + *i)) && (*(s + *i) != '0'))
 	{
 		num = ft_atoi((char *)(s + *i));
 		if (*(s + *i - 1) == '.')
