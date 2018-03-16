@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:53 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 14:48:01 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:30:01 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ static void		put_char_string(wchar_t in, char *tmp_str, t_conv *conv)
 		ft_putstr(tmp_str);
 		ft_putchar(in);
 	}
+	free(tmp_str);
 }
 
-void	conv_char(t_event *ev, t_conv *conv)
+void			conv_char(t_event *ev, t_conv *conv)
 {
 	wchar_t	in;
 	char	*tmp_str;

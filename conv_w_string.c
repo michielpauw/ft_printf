@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:51:50 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 14:04:20 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:31:11 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,6 @@ static wchar_t	*handle_min_width_big_s(t_conv *conv, wchar_t *tmp_str,
 	return (big);
 }
 
-static int	get_amount_bytes(wchar_t c)
-{
-	size_t	length;
-
-	length = 1;
-	while (c /= 2)
-		length++;
-	if (length < 8)
-		return (1);
-	return ((length + 3) / 5);
-}
-
 static int		get_bytes_to_write(wchar_t *tmp_str, t_conv *conv)
 {
 	int	total;
@@ -84,38 +72,50 @@ static int		get_bytes_to_write(wchar_t *tmp_str, t_conv *conv)
 	while (total <= conv->precision)
 	{
 		prev = total;
-		total += get_amount_bytes(*(tmp_str + index));
+		total += ft_char_bytes(*(tmp_str + index));
 		index++;
 	}
 	return (prev);
 }
 
-void			conv_w_string(t_event *ev, t_conv *conv, wchar_t *tmp_str)
+static void		write_w_string(t_event *ev, t_conv *conv, wchar_t *tmp_str)
 {
-	int	bytes;
 	int	i;
 
-	bytes = 0;
-	i = 0;
-	while (tmp_str[i])
-	{
-		bytes += get_amount_bytes(*(tmp_str + i));
-		i++;
-	}
-	if (conv->precision < 0 || (bytes > conv->precision && conv->precision > 0))
-		bytes = get_bytes_to_write(tmp_str, conv);
-	if (bytes < conv->min_width)
-		tmp_str = handle_min_width_big_s(conv, tmp_str, bytes);
-	else
-		conv->min_width = bytes;
 	i = 0;
 	while (i < conv->min_width)
 	{
-		i += get_amount_bytes(*(tmp_str));
+		i += ft_char_bytes(*(tmp_str));
 		ft_putchar(*(tmp_str++));
 	}
 	ev->str_len += i;
 	(ev->index)++;
 }
 
+void			conv_w_string(t_event *ev, t_conv *conv, wchar_t *tmp_str)
+{
+	int		bytes;
+	int		i;
+	wchar_t	*to_free;
 
+	bytes = 0;
+	i = 0;
+	to_free = NULL;
+	while (tmp_str[i])
+	{
+		bytes += ft_char_bytes(*(tmp_str + i));
+		i++;
+	}
+	if (conv->precision < 0 || (bytes > conv->precision && conv->precision > 0))
+		bytes = get_bytes_to_write(tmp_str, conv);
+	if (bytes < conv->min_width)
+	{
+		tmp_str = handle_min_width_big_s(conv, tmp_str, bytes);
+		to_free = tmp_str;
+	}
+	else
+		conv->min_width = bytes;
+	write_w_string(ev, conv, tmp_str);
+	if (to_free)
+		free(to_free);
+}

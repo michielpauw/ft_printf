@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 12:54:46 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/14 14:50:48 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:33:07 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	len_mod_char_short(t_conv *conv, t_event *ev)
 		(conv->types).si = va_arg(ev->ap, int);
 }
 
-#include <stdio.h>
 static void	len_mod_long(t_conv *conv, t_event *ev)
 {
 	if (conv->len_mod == 'L')

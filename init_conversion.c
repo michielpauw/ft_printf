@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:26:55 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 14:45:50 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:35:57 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_conv	new_conv(void)
 	return (conv);
 }
 
-static int	check_flag(char c, t_conv *conv)
+static int		check_flag(char c, t_conv *conv)
 {
 	if (c == '#')
 		conv->alt = 1;
@@ -49,25 +49,34 @@ static int	check_flag(char c, t_conv *conv)
 	return (1);
 }
 
-static int	check_len_mod(const char *s, int *i, t_conv *conv)
+static int		check_len_mod(const char *s, int *i, t_conv *conv)
 {
+	char	c;
+
 	if (ft_strchr("hljz", *(s + *i)))
 	{
 		if ((*(s + *i) == 'h' || *(s + *i) == 'l')
 				&& *(s + *i + 1) == *(s + *i))
 		{
 			conv->upper = 1;
-			conv->len_mod = *(s + *i) - 32;
+			c = *(s + *i) - 32;
 			(*i)++;
 		}
 		else
-			conv->len_mod = *(s + *i);
+			c = *(s + *i);
+		if (conv->len_mod)
+		{
+			if (ft_strchr("HhzjlL", c) > ft_strchr("HhzjlL", conv->len_mod))
+				conv->len_mod = c;
+		}
+		else
+			conv->len_mod = c;
 		return (1);
 	}
 	return (0);
 }
 
-static int	check_number(const char *s, int *i, t_conv *conv)
+static int		check_number(const char *s, int *i, t_conv *conv)
 {
 	int		num;
 
@@ -111,5 +120,4 @@ int				init_conversion(const char *s, t_event *ev)
 		else
 			return (ev->index);
 	}
-	return (ev->index);
 }

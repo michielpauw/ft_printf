@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 16:27:38 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 14:17:12 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:32:00 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,15 @@ char		*handle_precision(t_conv *conv, char *str)
 
 	if (conv->type == 's')
 		return (handle_string(conv, str));
-	if (!(to_return = ft_strset('0', conv->precision + (conv->type_sign > 0
-						&& conv->precision > conv->min_width))))
+	if (!(to_return = ft_strset('0', conv->precision)))
 		error(2);
 	i = conv->precision;
-	j = ft_strlen(str) - (conv->type_sign > 0);
+	j = ft_strlen(str);
 	while (j)
 	{
 		i--;
 		j--;
-		*(to_return + i + (conv->type_sign > 0 && conv->precision
-					> conv->min_width)) = *(str + j + (conv->type_sign > 0));
+		*(to_return + i) = *(str + j);
 	}
 	free(str);
 	return (to_return);

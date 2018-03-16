@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:32:03 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 15:06:07 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:31:33 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	deal_no_conversion(t_event *ev, t_conv *conv, char c)
 {
 	char	*tmp_str;
-	
+
 	if (!(tmp_str = (char *)malloc(sizeof(char) * 2)))
 		error(2);
 	*tmp_str = c;
@@ -25,6 +25,7 @@ static void	deal_no_conversion(t_event *ev, t_conv *conv, char c)
 	ft_putstr(tmp_str);
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
+	free(tmp_str);
 }
 
 static void	order_precision(t_conv *conv, char c)

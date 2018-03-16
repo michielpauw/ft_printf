@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:35:14 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 10:53:36 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:31:04 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ static void		handle_little_s(t_event *ev, t_conv *conv, char *tmp_str)
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
 	ft_putstr(tmp_str);
+	free(tmp_str);
 }
 
-void		conv_string(t_event *ev, t_conv *conv)
+void			conv_string(t_event *ev, t_conv *conv)
 {
 	wchar_t	*tmp_w_str;
 	char	*tmp_str;

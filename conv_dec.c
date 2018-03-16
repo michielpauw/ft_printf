@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:36:58 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 15:40:10 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:30:07 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,18 @@ static char	*handle_sign(t_conv *conv, char *str)
 {
 	char	*tmp;
 
-	if (conv->sign)
+	if (conv->type_sign == '-')
+		tmp = ft_strjoin("-", str);
+	else if (conv->sign)
+	{
+		conv->type_sign = '+';
 		tmp = ft_strjoin("+", str);
+	}
 	else
+	{
+		conv->type_sign = ' ';
 		tmp = ft_strjoin(" ", str);
+	}
 	free(str);
 	return (tmp);
 }
@@ -58,51 +66,47 @@ static char	*get_initial_str(t_conv *conv)
 		return (ft_itoa((conv->types).i));
 }
 
-static char	*conv_str_sign(char *str, char sign)
+static char	*conv_neg(char *s, t_conv *conv)
 {
-	int	i;
-	int	len;
-	int	p;
+	int		len;
+	char	*to_return;
 
-	i = 0;
-	p = 0;
-	len = ft_strlen(str);
-	while (i < len)
+	len = ft_strlen(s);
+	conv->type_sign = '-';
+	if (!(to_return = (char *)malloc(sizeof(char) * len)))
+		error(2);
+	while (len)
 	{
-		if (sign && !p  && ((*(str + i + 1) >= '0' && *(str + i + 1) <= '9')
-					|| *str == '0'))
-		{
-			p = 1;
-			*(str + i) = sign;
-		}
-		else if (*(str + i) == sign && p)
-			*(str + i) = '0';
-		i++;
+		to_return[len - 1] = s[len];
+		len--;
 	}
-	return (str);
+	free(s);
+	return (to_return);
 }
 
 void		conv_dec(t_event *ev, t_conv *conv)
 {
 	char	*tmp_str;
 
-	if (conv->alt)
-		ev->error = 1;
 	set_len_mod(conv, ev);
 	if (!(tmp_str = get_initial_str(conv)))
 		error(2);
 	if (*tmp_str == '0' && conv->precision < 0)
 		*tmp_str = 0;
-	if (((conv->types).i) >= 0 && (conv->sign || conv->space))
-		tmp_str = handle_sign(conv, tmp_str);
-	if (*tmp_str == '+' || *tmp_str == '-' || *tmp_str == ' ')
-		conv->type_sign = *tmp_str;
-	if ((int)ft_strlen(tmp_str) - (conv->type_sign > 0) < conv->precision)
+	if (*tmp_str == '-')
+		tmp_str = conv_neg(tmp_str, conv);
+	conv->min_width = (conv->zero && (conv->type_sign || conv->sign
+				|| conv->space)) ? conv->min_width - 1 : conv->min_width;
+	if ((int)ft_strlen(tmp_str) < conv->precision)
 		tmp_str = handle_precision(conv, tmp_str);
-	if ((int)ft_strlen(tmp_str) < conv->min_width)
+	if ((int)ft_strlen(tmp_str) < conv->min_width && conv->zero)
+		tmp_str = handle_min_width(conv, tmp_str);
+	if (conv->sign || conv->space || conv->type_sign == '-')
+		tmp_str = handle_sign(conv, tmp_str);
+	if ((int)ft_strlen(tmp_str) < conv->min_width && !conv->zero)
 		tmp_str = handle_min_width(conv, tmp_str);
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
-	tmp_str = conv_str_sign(tmp_str, conv->type_sign);
 	ft_putstr(tmp_str);
+	free(tmp_str);
 }

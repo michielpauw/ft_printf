@@ -6,7 +6,7 @@
 #    By: mpauw <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/06 17:41:17 by mpauw             #+#    #+#              #
-#    Updated: 2018/03/16 10:52:52 by mpauw            ###   ########.fr        #
+#    Updated: 2018/03/16 17:43:24 by mpauw            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,10 +48,10 @@ $(LFTDIR)$(LIBFT):
 
 clean:
 	-@/bin/rm -f $(OBJ)
-#	-@$(MAKE) -C $(LFTDIR) clean
+	-@$(MAKE) -C $(LFTDIR) clean
 
 fclean: clean
 	-@/bin/rm -f $(NAME)
-#	-@$(MAKE) -C $(LFTDIR) fclean
+	-@$(MAKE) -C $(LFTDIR) fclean
 
 re: fclean all

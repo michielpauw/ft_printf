@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 16:00:02 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 15:06:20 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:31:44 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	handle_right(char *big, char *little, size_t width)
 	}
 }
 
-char	*handle_min_width(t_conv *conv, char *little)
+char		*handle_min_width(t_conv *conv, char *little)
 {
 	char	*big;
 

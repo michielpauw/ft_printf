@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:38:30 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/15 20:59:32 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:30:16 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ void	conv_percent(t_event *ev, t_conv *conv)
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
 	ft_putstr(tmp_str);
+	free(tmp_str);
 }

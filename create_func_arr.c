@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:46:27 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/13 18:38:34 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:32:13 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	create_func_arr_conv(t_event *ev)
 	(ev->func_arr_conv[8]).f = &conv_percent;
 }
 
-void	create_func_arr(t_event *ev)
+void		create_func_arr(t_event *ev)
 {
 	create_func_arr_conv(ev);
 	set_len_mod_dec(ev);

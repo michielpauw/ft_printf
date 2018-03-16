@@ -1,5 +1,17 @@
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/16 17:33:22 by mpauw             #+#    #+#             */
+/*   Updated: 2018/03/16 17:33:41 by mpauw            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef LIBFTPRINTF_H
+# define LIBFTPRINTF_H
 
 # define CONV_AMOUNT 9
 # define LEN_MOD_AMOUNT 7

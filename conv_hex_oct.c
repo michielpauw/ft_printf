@@ -6,13 +6,13 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:15 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 14:52:50 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 17:38:54 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static char	*handle_alt(char *str, t_conv *conv)
+static char						*handle_alt(char *str, t_conv *conv)
 {
 	char	*tmp;
 
@@ -38,7 +38,7 @@ static char	*handle_alt(char *str, t_conv *conv)
 	return (tmp);
 }
 
-static void	set_len_mod(t_conv *conv, t_event *ev)
+static void						set_len_mod(t_conv *conv, t_event *ev)
 {
 	int	i;
 
@@ -72,7 +72,7 @@ static unsigned long long int	get_in(t_conv *conv)
 		return (((unsigned int)(conv->types).ui));
 }
 
-static char	*get_tmp_str(t_conv *conv)
+static char						*get_tmp_str(t_conv *conv)
 {
 	char					*tmp_str;
 
@@ -91,7 +91,7 @@ static char	*get_tmp_str(t_conv *conv)
 		if (!(tmp_str = ft_int_to_base(get_in(conv), "0123456789")))
 			error(2);
 	}
-	else	
+	else
 	{
 		if (!(tmp_str = ft_int_to_base(get_in(conv), "01234567")))
 			error(2);
@@ -99,7 +99,7 @@ static char	*get_tmp_str(t_conv *conv)
 	return (tmp_str);
 }
 
-void		conv_hex_oct(t_event *ev, t_conv *conv)
+void							conv_hex_oct(t_event *ev, t_conv *conv)
 {
 	char	*tmp_str;
 	int		zero;
@@ -124,4 +124,5 @@ void		conv_hex_oct(t_event *ev, t_conv *conv)
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
 	ft_putstr(tmp_str);
+	free(tmp_str);
 }
