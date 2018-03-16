@@ -51,6 +51,7 @@ typedef struct				s_conv
 	char					*str;
 	char					type;
 	char					type_sign;
+	int						numeric;
 	void					(*f)();
 }							t_conv;
 
@@ -75,6 +76,8 @@ int							convert(t_event *ev, t_conv *conv, char c);
 void						conv_hex_oct(t_event *ev, t_conv *conv);
 void						conv_dec(t_event *ev, t_conv *conv);
 void						conv_string(t_event *ev, t_conv *conv);
+void						conv_w_string(t_event *ev, t_conv *conv,
+		wchar_t *tmp_str);
 void						conv_char(t_event *ev, t_conv *conv);
 void						conv_percent(t_event *ev, t_conv *conv);
 void						conv_pointer(t_event *ev, t_conv *conv);

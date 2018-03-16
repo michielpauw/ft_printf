@@ -6,30 +6,32 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:15 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/15 21:09:53 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 14:52:50 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static char	*handle_alt(char *str, char type, int upper)
+static char	*handle_alt(char *str, t_conv *conv)
 {
 	char	*tmp;
 
-	if (type == 'x' && !upper)
+	if (!(*str) && conv->type == 'x')
+		return (str);
+	if (conv->type == 'x' && !conv->upper)
 	{
 		tmp = ft_strjoin("0x", str);
-	//	free(str);
+		free(str);
 	}
-	else if (type == 'x' && upper)
+	else if (conv->type == 'x' && conv->upper)
 	{
 		tmp = ft_strjoin("0X", str);
-	//	free(str);
+		free(str);
 	}
 	else if (*str != '0')
 	{
 		tmp = ft_strjoin("0", str);
-	//	free(str);
+		free(str);
 	}
 	else
 		tmp = str;
@@ -109,16 +111,16 @@ void		conv_hex_oct(t_event *ev, t_conv *conv)
 		*tmp_str = 0;
 	if (*tmp_str == '0')
 		zero = 1;
-	if (conv->alt && !conv->zero && !zero)
-		tmp_str = handle_alt(tmp_str, conv->type, conv->upper);
 	if ((int)ft_strlen(tmp_str) < conv->precision)
 		tmp_str = handle_precision(conv, tmp_str);
+	if (conv->alt && !conv->zero && !zero)
+		tmp_str = handle_alt(tmp_str, conv);
 	if (conv->alt && conv->zero && !zero)
 		conv->min_width -= 2;
 	if ((int)ft_strlen(tmp_str) < conv->min_width)
 		tmp_str = handle_min_width(conv, tmp_str);
 	if (conv->alt && conv->zero && !zero)
-		tmp_str = handle_alt(tmp_str, conv->type, conv->upper);
+		tmp_str = handle_alt(tmp_str, conv);
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
 	ft_putstr(tmp_str);

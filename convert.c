@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 17:32:03 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/15 21:20:10 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/16 15:06:07 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ static void	deal_no_conversion(t_event *ev, t_conv *conv, char c)
 
 static void	order_precision(t_conv *conv, char c)
 {
+	if (c == 'x' || c == 'u' || c == 'd' || c == 'i' || c == 'o')
+		conv->numeric = 1;
+	else
+		conv->numeric = 0;
 	if (conv->precision >= 0)
 		return ;
-	if (conv->precision < 0 && (c == 'd' || c == 'i' || c == 'u' || c == 'x'
-				|| c == 'o'))
+	if (conv->precision < 0 && c != 'c' && c != 's')
 		conv->precision = -1;
 	else
 		conv->precision = -2;
@@ -61,6 +64,7 @@ int			convert(t_event *ev, t_conv *conv, char c)
 		}
 		i++;
 	}
+	order_precision(conv, c);
 	if (conv->min_width)
 		deal_no_conversion(ev, conv, orig_c);
 	return (0);
