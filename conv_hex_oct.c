@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:15 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 17:38:54 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/19 16:06:39 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,6 @@ static char						*handle_alt(char *str, t_conv *conv)
 	else
 		tmp = str;
 	return (tmp);
-}
-
-static void						set_len_mod(t_conv *conv, t_event *ev)
-{
-	int	i;
-
-	i = 0;
-	while (i < LEN_MOD_AMOUNT)
-	{
-		if (conv->len_mod == (ev->func_arr_len_mod_hex_oct[i]).type)
-		{
-			(ev->func_arr_len_mod_hex_oct[i]).f(conv, ev);
-			return ;
-		}
-		i++;
-	}
 }
 
 static unsigned long long int	get_in(t_conv *conv)
@@ -99,28 +83,43 @@ static char						*get_tmp_str(t_conv *conv)
 	return (tmp_str);
 }
 
+static char						*min_width_alt(t_conv *conv, char *tmp_str,
+		int zero)
+{
+	int	bool_width_prec;
+
+	bool_width_prec = (conv->min_width <= conv->precision &&
+			conv->precision != 0) ? 1 : 0;
+	if (conv->alt && conv->zero && !zero && conv->precision == 0)
+		bool_width_prec = 1;
+	if (conv->alt && conv->zero && !zero)
+		conv->min_width -= (conv->type == 'x' && bool_width_prec) ? 2 : 0;
+	if ((int)ft_strlen(tmp_str) < conv->min_width && conv->type == 'x'
+			&& bool_width_prec)
+		tmp_str = handle_min_width(conv, tmp_str);
+	if (conv->alt && conv->zero && !zero)
+		tmp_str = handle_alt(tmp_str, conv);
+	if ((int)ft_strlen(tmp_str) < conv->min_width &&
+			(conv->type != 'x' || !bool_width_prec))
+		tmp_str = handle_min_width(conv, tmp_str);
+	return (tmp_str);
+}
+
 void							conv_hex_oct(t_event *ev, t_conv *conv)
 {
 	char	*tmp_str;
 	int		zero;
 
-	set_len_mod(conv, ev);
+	get_len_mod(conv, ev, 'u');
 	tmp_str = get_tmp_str(conv);
-	zero = 0;
 	if (*tmp_str == '0' && conv->precision < 0)
 		*tmp_str = 0;
-	if (*tmp_str == '0')
-		zero = 1;
+	zero = (*tmp_str == '0') ? 1 : 0;
 	if ((int)ft_strlen(tmp_str) < conv->precision)
 		tmp_str = handle_precision(conv, tmp_str);
 	if (conv->alt && !conv->zero && !zero)
 		tmp_str = handle_alt(tmp_str, conv);
-	if (conv->alt && conv->zero && !zero)
-		conv->min_width -= 2;
-	if ((int)ft_strlen(tmp_str) < conv->min_width)
-		tmp_str = handle_min_width(conv, tmp_str);
-	if (conv->alt && conv->zero && !zero)
-		tmp_str = handle_alt(tmp_str, conv);
+	tmp_str = min_width_alt(conv, tmp_str, zero);
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
 	ft_putstr(tmp_str);

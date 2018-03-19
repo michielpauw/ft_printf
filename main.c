@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   conv_percent.c                                     :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/06 11:38:30 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/19 14:14:46 by mpauw            ###   ########.fr       */
+/*   Created: 2018/03/07 11:23:46 by mpauw             #+#    #+#             */
+/*   Updated: 2018/03/19 16:03:52 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "libftprintf.h"
+#include <stdio.h>
+#include <limits.h>
+#include <locale.h>
+#include <wchar.h>
 
-void	conv_percent(t_event *ev, t_conv *conv)
+int	main(void)
 {
-	char		*tmp_str;
+	int		n;
+	int		m;
+	void	*p;
+	wchar_t	s[4];
 
-	tmp_str = ft_strset('%', 1);
-	if ((int)ft_strlen(tmp_str) < conv->min_width)
-		tmp_str = handle_min_width(conv, tmp_str);
-	ev->str_len += ft_strlen(tmp_str);
-	(ev->index)++;
-	ft_putstr(tmp_str);
-	free(tmp_str);
+	setlocale(LC_ALL, "");
+
+	s[0] = 0x53;
+	s[1] = 0x3abc;
+	s[2] = 0x81000;
+	s[3] = '\0';
+	m = 42;
+	//printf("{%p}", &n);
+	n = ft_printf("%---10.5ls", s);
+	ft_printf("\n");
+	m = printf("%---10.5ls", s);
+	printf("\n");
+	printf("Fac: %d Own: %d\n", m, n);
 }

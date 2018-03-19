@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   conv_percent.c                                     :+:      :+:    :+:   */
+/*   get_len_mod.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/06 11:38:30 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/19 14:14:46 by mpauw            ###   ########.fr       */
+/*   Created: 2018/03/19 16:02:14 by mpauw             #+#    #+#             */
+/*   Updated: 2018/03/19 16:07:11 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void	conv_percent(t_event *ev, t_conv *conv)
+void	get_len_mod(t_conv *conv, t_event *ev, char type)
 {
-	char		*tmp_str;
+	int	i;
 
-	tmp_str = ft_strset('%', 1);
-	if ((int)ft_strlen(tmp_str) < conv->min_width)
-		tmp_str = handle_min_width(conv, tmp_str);
-	ev->str_len += ft_strlen(tmp_str);
-	(ev->index)++;
-	ft_putstr(tmp_str);
-	free(tmp_str);
+	i = 0;
+	while (i < LEN_MOD_AMOUNT)
+	{
+		if (type == 'u' &&
+				conv->len_mod == (ev->func_arr_len_mod_hex_oct[i]).type)
+		{
+			(ev->func_arr_len_mod_hex_oct[i]).f(conv, ev);
+			return ;
+		}
+		else if (type == 'd' &&
+				conv->len_mod == (ev->func_arr_len_mod_dec[i]).type)
+		{
+			(ev->func_arr_len_mod_hex_oct[i]).f(conv, ev);
+			return ;
+		}
+		i++;
+	}
 }

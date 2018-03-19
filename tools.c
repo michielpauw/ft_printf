@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   conv_percent.c                                     :+:      :+:    :+:   */
+/*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/06 11:38:30 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/19 14:14:46 by mpauw            ###   ########.fr       */
+/*   Created: 2018/03/19 15:57:45 by mpauw             #+#    #+#             */
+/*   Updated: 2018/03/19 16:03:49 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void	conv_percent(t_event *ev, t_conv *conv)
+int		get_bytes_to_write(wchar_t *tmp_str, t_conv *conv)
 {
-	char		*tmp_str;
+	int	total;
+	int	prev;
+	int	index;
 
-	tmp_str = ft_strset('%', 1);
-	if ((int)ft_strlen(tmp_str) < conv->min_width)
-		tmp_str = handle_min_width(conv, tmp_str);
-	ev->str_len += ft_strlen(tmp_str);
-	(ev->index)++;
-	ft_putstr(tmp_str);
-	free(tmp_str);
+	if (conv->precision < 0)
+		return (0);
+	total = 0;
+	index = 0;
+	while (total <= conv->precision)
+	{
+		prev = total;
+		total += ft_char_bytes(*(tmp_str + index));
+		index++;
+	}
+	return (prev);
 }

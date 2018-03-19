@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:36:58 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 17:30:07 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/19 16:06:53 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,6 @@ static char	*handle_sign(t_conv *conv, char *str)
 	}
 	free(str);
 	return (tmp);
-}
-
-static void	set_len_mod(t_conv *conv, t_event *ev)
-{
-	int	i;
-
-	i = 0;
-	while (i < LEN_MOD_AMOUNT)
-	{
-		if (conv->len_mod == (ev->func_arr_len_mod_dec[i]).type)
-		{
-			(ev->func_arr_len_mod_hex_oct[i]).f(conv, ev);
-			return ;
-		}
-		i++;
-	}
 }
 
 static char	*get_initial_str(t_conv *conv)
@@ -84,27 +68,39 @@ static char	*conv_neg(char *s, t_conv *conv)
 	return (to_return);
 }
 
+static char	*min_width_sign(t_conv *conv, char *tmp_str)
+{
+	int	first_min_width;
+
+	first_min_width = 0;
+	if (conv->zero && (*tmp_str != '0' || conv->precision == 0) &&
+			conv->min_width >= conv->precision)
+		first_min_width = 1;
+	conv->min_width = (first_min_width && (conv->type_sign || conv->sign
+				|| conv->space)) ? conv->min_width - 1 : conv->min_width;
+	if ((int)ft_strlen(tmp_str) < conv->min_width && first_min_width)
+		tmp_str = handle_min_width(conv, tmp_str);
+	if (conv->sign || conv->space || conv->type_sign == '-')
+		tmp_str = handle_sign(conv, tmp_str);
+	if ((int)ft_strlen(tmp_str) < conv->min_width && !first_min_width)
+		tmp_str = handle_min_width(conv, tmp_str);
+	return (tmp_str);
+}
+
 void		conv_dec(t_event *ev, t_conv *conv)
 {
 	char	*tmp_str;
 
-	set_len_mod(conv, ev);
+	get_len_mod(conv, ev, 'u');
 	if (!(tmp_str = get_initial_str(conv)))
 		error(2);
 	if (*tmp_str == '0' && conv->precision < 0)
 		*tmp_str = 0;
 	if (*tmp_str == '-')
 		tmp_str = conv_neg(tmp_str, conv);
-	conv->min_width = (conv->zero && (conv->type_sign || conv->sign
-				|| conv->space)) ? conv->min_width - 1 : conv->min_width;
 	if ((int)ft_strlen(tmp_str) < conv->precision)
 		tmp_str = handle_precision(conv, tmp_str);
-	if ((int)ft_strlen(tmp_str) < conv->min_width && conv->zero)
-		tmp_str = handle_min_width(conv, tmp_str);
-	if (conv->sign || conv->space || conv->type_sign == '-')
-		tmp_str = handle_sign(conv, tmp_str);
-	if ((int)ft_strlen(tmp_str) < conv->min_width && !conv->zero)
-		tmp_str = handle_min_width(conv, tmp_str);
+	tmp_str = min_width_sign(conv, tmp_str);
 	ev->str_len += ft_strlen(tmp_str);
 	(ev->index)++;
 	ft_putstr(tmp_str);

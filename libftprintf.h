@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 17:33:22 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 17:33:41 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/19 16:07:47 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char						*handle_precision(t_conv *conv, char *str);
 void						error(int error);
 void						set_len_mod_dec(t_event *ev);
 void						set_len_mod_hex_oct(t_event *ev);
-void						set_len_mod_string(t_event *ev);
-void						set_len_mod_char(t_event *ev);
+int							get_bytes_to_write(wchar_t *tmp_str, t_conv *conv);
+void						get_len_mod(t_conv *conv, t_event *ev, char type);
 
 #endif
