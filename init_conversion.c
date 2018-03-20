@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:26:55 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/16 17:35:57 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/20 14:42:09 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_conv	new_conv(void)
 	conv.str = 0;
 	conv.type_sign = 0;
 	(conv.types).i = 0;
+	conv.no_putchar = 0;
 	return (conv);
 }
 

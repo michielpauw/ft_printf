@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 17:33:22 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/19 16:07:47 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/20 17:15:31 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define CONV_AMOUNT 9
 # define LEN_MOD_AMOUNT 7
+# define MAX_BUFF_SIZE 1000
 
 # include "libft/libft.h"
 # include <stdarg.h>
@@ -57,6 +58,7 @@ typedef struct				s_conv
 	int						space;
 	int						upper;
 	int						min_width;
+	int						min_width_o;
 	int						precision;
 	char					len_mod;
 	int						length;
@@ -64,6 +66,7 @@ typedef struct				s_conv
 	char					type;
 	char					type_sign;
 	int						numeric;
+	int						no_putchar;
 	void					(*f)();
 }							t_conv;
 
@@ -79,6 +82,7 @@ typedef struct				s_event
 	void					(*func_len_mod_string)();
 	void					(*func_len_mod_char)();
 	va_list					ap;
+	wchar_t					buff[MAX_BUFF_SIZE];
 }							t_event;
 
 int							ft_printf(const char *format, ...);

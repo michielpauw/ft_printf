@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:51:50 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/19 15:58:38 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/20 17:19:43 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,29 +62,45 @@ static wchar_t	*handle_min_width_big_s(t_conv *conv, wchar_t *tmp_str,
 static void		write_w_string(t_event *ev, t_conv *conv, wchar_t *tmp_str)
 {
 	int	i;
+	int	actually_written;
+	int	to_add;
 
 	i = 0;
+	actually_written = 0;
 	while (i < conv->min_width)
 	{
-		i += ft_char_bytes(*(tmp_str));
-		ft_putchar(*(tmp_str++));
+		to_add = ft_char_bytes(*(tmp_str));
+		i += to_add;
+		if ((MB_CUR_MAX == 1 || (!conv->upper && conv->len_mod != 'l'))
+			&& ((*tmp_str > 127 && *tmp_str < 256) || *tmp_str < 0))
+		{
+			write (1, tmp_str++, 1);
+			to_add--;
+		}
+		else
+			ft_putchar(*(tmp_str++));
+		actually_written += to_add;
 	}
-	ev->str_len += i;
+	actually_written--;
+	while (++actually_written < conv->min_width_o)
+		write(1, " ", 1);
+	ev->str_len += actually_written;
 	(ev->index)++;
 }
 
-static int		inv_char(t_conv *conv, t_event *ev, wchar_t in)
+static int		inv_char(t_conv *conv, t_event *ev, wchar_t in, int bytes)
 {
-	if (!conv->upper && conv->len_mod != 'l' && (in > 127 || in < 0))
-	{
-		ft_putchar(-1);
-		(ev->index)++;
-		(ev->str_len)++;
-		return (1);
-	}
-	else if ((MB_CUR_MAX == 1 && in > 255) || (in < 57344 && in > 55295)
+	if ((MB_CUR_MAX == 1 || (!conv->upper && conv->len_mod != 'l'))
+			&& ((in > 127 && in < 256) || in < 0))
+		return (0);
+	else if ((MB_CUR_MAX == 1 && in > 127)
+			|| (in > 55215 && in < 55238)
+			|| (in < 57344 && in > 55295) || (in < 65024 && in > 65039)
+			|| (in < 921600 && in > 907503) || (in < 921600 && in > 917503)
 			|| in > 1114111 || in < 0)
 	{
+		if (bytes > conv->precision && conv->precision > 0)
+			return (0);
 		ev->error = 1;
 		return (1);
 	}
@@ -100,11 +116,12 @@ void			conv_w_string(t_event *ev, t_conv *conv, wchar_t *tmp_str)
 	bytes = 0;
 	i = -1;
 	to_free = NULL;
+	conv->min_width_o = conv->min_width;
 	while (tmp_str[++i])
 	{
-		if (inv_char(conv, ev, tmp_str[i]))
-			return ;
 		bytes += ft_char_bytes(*(tmp_str + i));
+		if (inv_char(conv, ev, tmp_str[i], bytes))
+			return ;
 	}
 	if (conv->precision < 0 || (bytes > conv->precision && conv->precision > 0))
 		bytes = get_bytes_to_write(tmp_str, conv);
