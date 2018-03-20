@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 11:23:46 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/20 17:22:39 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/20 18:32:51 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,21 @@ int	main(void)
 	s[2] = 'b';
 	s[3] = '\0';
 
-//	s[0] = 0x53;
-//	s[1] = 0x3abc;
-//	s[2] = 0x81000;
-//	s[3] = '\0';
+	s[0] = 0x53;
+	s[1] = 0x3abc;
+	s[2] = 0x81000;
+	s[3] = '\0';
 
 	m = 42;
 	//printf("{%p}", &n);
 //	k = ft_printf("yo%2C%-12lc et %C titi %C tyty", 'u', 254, 256, 'a');
 //	k = ft_printf("yo%2C%-12lc et titi %C tyty", 'u', 254, 'a');
 //	n = ft_printf("yo%2C%-12lc et %C titi %C tyty", 'u', 254, 256, 'a');
-	n = ft_printf("%9ls %S", s, L"a");
+	n = ft_printf("%-+-12.7Dt%0 4i %04.2% et %lc titi", 125, 124, 256);
 	printf("\n");
 //	l = printf("yo%2C%-12lc et %C titi %C tyty", 'u', 254, 256, 'a');
 //	l = printf("yo%2C%-12lc et titi %C tyty", 'u', 254, 'a');
-	m = printf("%9ls %S", s, L"a");
+	m = printf("%-+-12.7Dt%0 4i %04.2% et %lc titi", 125, 124, 256);
 	printf("\n");
 //	printf("Fac: %d Own: %d\n", l, k);
 	printf("Fac: %d Own: %d\n", m, n);

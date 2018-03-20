@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 17:33:22 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/20 17:15:31 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/20 18:32:10 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct				s_conv
 	int						space;
 	int						upper;
 	int						min_width;
-	int						min_width_o;
 	int						precision;
 	char					len_mod;
 	int						length;
@@ -104,5 +103,6 @@ void						set_len_mod_dec(t_event *ev);
 void						set_len_mod_hex_oct(t_event *ev);
 int							get_bytes_to_write(wchar_t *tmp_str, t_conv *conv);
 void						get_len_mod(t_conv *conv, t_event *ev, char type);
+size_t						get_amount_bytes(wchar_t c, t_conv *conv);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 16:26:55 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/20 14:42:09 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/20 17:46:32 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ static t_conv	new_conv(void)
 	return (conv);
 }
 
-static int		check_flag(char c, t_conv *conv)
+static int		check_flag(char c, t_conv *conv, const char *s, int *i)
 {
 	if (c == '#')
 		conv->alt = 1;
 	else if (c == '0')
+	{
+		if (*(s + *i - 1) == '.')
+			return (1);
 		conv->zero = 1;
+	}
 	else if (c == '-')
 		conv->left = 1;
 	else if (c == '+')
@@ -107,7 +111,7 @@ int				init_conversion(const char *s, t_event *ev)
 			return (ev->index);
 		else if (check_number(s, &(ev->index), &(ev->cur_conv)))
 			continue ;
-		else if (check_flag(c, &(ev->cur_conv)))
+		else if (check_flag(c, &(ev->cur_conv), s, &(ev->index)))
 			continue ;
 		else if (check_len_mod(s, &(ev->index), &(ev->cur_conv)))
 			continue ;

@@ -6,23 +6,11 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 11:37:53 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/20 14:42:05 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/20 18:32:12 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-
-static size_t	get_amount_bytes(wchar_t c)
-{
-	size_t	length;
-
-	length = 1;
-	while (c /= 2)
-		length++;
-	if (length < 8)
-		return (1);
-	return ((length + 3) / 5);
-}
 
 static void		put_char_string(wchar_t in, char *tmp_str, t_conv *conv)
 {
@@ -77,7 +65,7 @@ void			conv_char(t_event *ev, t_conv *conv)
 	in = va_arg(ev->ap, wchar_t);
 	if (inv_char(conv, ev, in))
 		return ;
-	bts = get_amount_bytes(in);
+	bts = get_amount_bytes(in, conv);
 	(conv->min_width) -= bts;
 	if (conv->min_width > 0)
 		tmp_str = handle_min_width(conv, tmp_str);

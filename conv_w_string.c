@@ -6,7 +6,7 @@
 /*   By: mpauw <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:51:50 by mpauw             #+#    #+#             */
-/*   Updated: 2018/03/20 17:19:43 by mpauw            ###   ########.fr       */
+/*   Updated: 2018/03/20 18:32:17 by mpauw            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,29 +62,18 @@ static wchar_t	*handle_min_width_big_s(t_conv *conv, wchar_t *tmp_str,
 static void		write_w_string(t_event *ev, t_conv *conv, wchar_t *tmp_str)
 {
 	int	i;
-	int	actually_written;
-	int	to_add;
 
 	i = 0;
-	actually_written = 0;
 	while (i < conv->min_width)
 	{
-		to_add = ft_char_bytes(*(tmp_str));
-		i += to_add;
+		i += get_amount_bytes(*(tmp_str), conv);
 		if ((MB_CUR_MAX == 1 || (!conv->upper && conv->len_mod != 'l'))
 			&& ((*tmp_str > 127 && *tmp_str < 256) || *tmp_str < 0))
-		{
 			write (1, tmp_str++, 1);
-			to_add--;
-		}
 		else
 			ft_putchar(*(tmp_str++));
-		actually_written += to_add;
 	}
-	actually_written--;
-	while (++actually_written < conv->min_width_o)
-		write(1, " ", 1);
-	ev->str_len += actually_written;
+	ev->str_len += i;
 	(ev->index)++;
 }
 
@@ -116,10 +105,9 @@ void			conv_w_string(t_event *ev, t_conv *conv, wchar_t *tmp_str)
 	bytes = 0;
 	i = -1;
 	to_free = NULL;
-	conv->min_width_o = conv->min_width;
 	while (tmp_str[++i])
 	{
-		bytes += ft_char_bytes(*(tmp_str + i));
+		bytes += get_amount_bytes(*(tmp_str + i), conv);
 		if (inv_char(conv, ev, tmp_str[i], bytes))
 			return ;
 	}
